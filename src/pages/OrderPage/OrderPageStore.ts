@@ -1,5 +1,5 @@
 import { action, observable } from "mobx";
-import { RootStore } from "../../RootStore";
+import { RootStore } from "../../store/RootStore";
 
 export class OrderPageStore {
   constructor(rootStore: RootStore) {
@@ -13,6 +13,6 @@ export class OrderPageStore {
 
   @action.bound
   increment() {
-    this.counter++;
+    this.counter += this.rootStore.stepSize;
   }
 }

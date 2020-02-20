@@ -5,4 +5,7 @@ configure({ enforceActions: "always" });
 export class RootStore {
   @observable
   masterData: string = "Hello";
+
+  @observable
+  stepSize = 1;
 }
