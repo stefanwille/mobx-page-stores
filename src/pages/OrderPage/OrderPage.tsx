@@ -1,8 +1,8 @@
 import { observer, useLocalStore } from "mobx-react-lite";
 import "mobx-react-lite/optimizeForReactDom";
 import React from "react";
-import { OrderPageStore } from "./OrderPageStore";
-import { OrderPageStoreProvider } from "./OrderPageContext";
+import { OrderPageStore } from "./store/OrderPageStore";
+import { OrderPageStoreProvider } from "./store/OrderPageStoreContext";
 import { OrderPageCounter } from "./OrderPageCounter";
 import { OrderPageButton } from "./OrderPageButton";
 import { useRootStore } from "../../store/RootStoreContext";

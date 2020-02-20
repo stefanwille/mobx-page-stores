@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import "mobx-react-lite/optimizeForReactDom";
 import React from "react";
-import { useOrderPageStore } from "./OrderPageContext";
+import { useOrderPageStore } from "./store/OrderPageStoreContext";
 
 export const OrderPageCounter: React.FC<{}> = observer(() => {
   const orderPageStore = useOrderPageStore();

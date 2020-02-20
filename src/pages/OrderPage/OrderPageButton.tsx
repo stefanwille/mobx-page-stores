@@ -1,6 +1,6 @@
 import "mobx-react-lite/optimizeForReactDom";
 import React from "react";
-import { useOrderPageStore } from "./OrderPageContext";
+import { useOrderPageStore } from "./store/OrderPageStoreContext";
 
 export const OrderPageButton: React.FC<{}> = () => {
   const orderPageStore = useOrderPageStore();
