@@ -1,8 +1,11 @@
 import "mobx-react-lite/optimizeForReactDom";
 import React from "react";
-import { useOrderPageStore } from "./store/OrderPageStoreContext";
+import { useRootStore } from "../../store/RootStoreContext";
 
 export const OrderPageButton: React.FC<{}> = () => {
-  const orderPageStore = useOrderPageStore();
-  return <button onClick={orderPageStore.increment}>Add</button>;
+  const rootStore = useRootStore();
+  if (!rootStore.orderPageStore) {
+    throw new Error("Bad");
+  }
+  return <button onClick={rootStore.orderPageStore.increment}>Add</button>;
 };

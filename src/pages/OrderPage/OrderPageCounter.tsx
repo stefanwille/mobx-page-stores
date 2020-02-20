@@ -1,9 +1,12 @@
 import { observer } from "mobx-react-lite";
 import "mobx-react-lite/optimizeForReactDom";
 import React from "react";
-import { useOrderPageStore } from "./store/OrderPageStoreContext";
+import { useRootStore } from "../../store/RootStoreContext";
 
 export const OrderPageCounter: React.FC<{}> = observer(() => {
-  const orderPageStore = useOrderPageStore();
-  return <div>In OrderPageCounter: {orderPageStore.counter}</div>;
+  const rootStore = useRootStore();
+  if (!rootStore.orderPageStore) {
+    throw new Error("Bad");
+  }
+  return <div>In OrderPageCounter: {rootStore.orderPageStore.counter}</div>;
 });

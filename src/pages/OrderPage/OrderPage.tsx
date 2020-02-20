@@ -1,24 +1,37 @@
-import { observer, useLocalStore } from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 import "mobx-react-lite/optimizeForReactDom";
-import React from "react";
+import React, { useEffect } from "react";
 import { OrderPageStore } from "./store/OrderPageStore";
-import { OrderPageStoreProvider } from "./store/OrderPageStoreContext";
 import { OrderPageCounter } from "./OrderPageCounter";
 import { OrderPageButton } from "./OrderPageButton";
 import { useRootStore } from "../../store/RootStoreContext";
+import { action } from "mobx";
 
 export const OrderPage: React.FC<{}> = observer(() => {
   const rootStore = useRootStore();
-  const orderPageStore = useLocalStore(() => new OrderPageStore(rootStore));
-  return (
-    <OrderPageStoreProvider value={orderPageStore}>
-      <div>
-        <h1>OrderPage</h1>
+  useEffect(
+    action(() => {
+      rootStore.orderPageStore = new OrderPageStore(rootStore);
+      return () => {
+        rootStore.orderPageStore = null;
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }),
+    []
+  );
+  const orderPageStore = rootStore.orderPageStore;
+  if (!orderPageStore) {
+    console.log("No store yet");
+    return null;
+  }
 
-        <div>In OrderPage: {orderPageStore.counter}</div>
-        <OrderPageCounter />
-        <OrderPageButton />
-      </div>
-    </OrderPageStoreProvider>
+  return (
+    <div>
+      <h1>OrderPage</h1>
+
+      <div>In OrderPage: {orderPageStore.counter}</div>
+      <OrderPageCounter />
+      <OrderPageButton />
+    </div>
   );
 });
