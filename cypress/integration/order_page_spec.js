@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
-describe("My First Test", function() {
-  it("Does not do much!", function() {
+describe("Order Page Test", function() {
+  it("increments a counter", function() {
     cy.visit("http://localhost:3000");
 
     cy.contains("Add").click();
