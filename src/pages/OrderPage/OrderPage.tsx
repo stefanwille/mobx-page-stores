@@ -4,10 +4,11 @@ import React, { useEffect } from "react";
 import { OrderPageStore } from "./store/OrderPageStore";
 import { OrderPageCounter } from "./OrderPageCounter";
 import { OrderPageButton } from "./OrderPageButton";
+import { UserView } from "./UserView";
 import { useRootStore } from "../../store/RootStoreContext";
 import { action } from "mobx";
 
-export const OrderPage: React.FC<{}> = observer(() => {
+const useInitPageStore = () => {
   const rootStore = useRootStore();
   // Initialize and clear up orderPageStore
   useEffect(
@@ -19,6 +20,27 @@ export const OrderPage: React.FC<{}> = observer(() => {
     }),
     []
   );
+};
+
+const useLoadData = () => {
+  const rootStore = useRootStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await rootStore.orderPageStore.loadUserById(1);
+      console.log("Data loaded", rootStore.orderPageStore.user);
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
+
+export const OrderPage: React.FC<{}> = observer(() => {
+  useInitPageStore();
+  useLoadData();
+
+  const rootStore = useRootStore();
 
   if (!rootStore._orderPageStore) {
     return null;
@@ -31,6 +53,7 @@ export const OrderPage: React.FC<{}> = observer(() => {
       <div>In OrderPage: {rootStore.orderPageStore.counter}</div>
       <OrderPageCounter />
       <OrderPageButton />
+      <UserView />
     </div>
   );
 });
