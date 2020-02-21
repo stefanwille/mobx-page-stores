@@ -14,6 +14,7 @@ const useInitPageStore = () => {
   useEffect(
     action(() => {
       rootStore._orderPageStore = new OrderPageStore(rootStore);
+      rootStore.orderPageStore.loadUserById(1);
       return () => {
         rootStore._orderPageStore = null;
       };
@@ -22,23 +23,8 @@ const useInitPageStore = () => {
   );
 };
 
-const useLoadData = () => {
-  const rootStore = useRootStore();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await rootStore.orderPageStore.loadUserById(1);
-      console.log("Data loaded", rootStore.orderPageStore.user);
-    };
-
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-};
-
 export const OrderPage: React.FC<{}> = observer(() => {
   useInitPageStore();
-  useLoadData();
 
   const rootStore = useRootStore();
 
