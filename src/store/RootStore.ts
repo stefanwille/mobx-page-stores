@@ -12,5 +12,12 @@ export class RootStore {
 
   // As described here: https://mobx.js.org/best/store.html#combining-multiple-stores
   @observable
-  orderPageStore: OrderPageStore | null = null;
+  _orderPageStore: OrderPageStore | null = null;
+
+  get orderPageStore(): OrderPageStore {
+    if (!this._orderPageStore) {
+      throw new Error("Missing _orderPageStore");
+    }
+    return this._orderPageStore;
+  }
 }

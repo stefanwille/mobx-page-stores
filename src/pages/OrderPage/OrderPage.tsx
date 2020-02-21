@@ -9,19 +9,18 @@ import { action } from "mobx";
 
 export const OrderPage: React.FC<{}> = observer(() => {
   const rootStore = useRootStore();
+  // Initialize and clear up orderPageStore
   useEffect(
     action(() => {
-      rootStore.orderPageStore = new OrderPageStore(rootStore);
+      rootStore._orderPageStore = new OrderPageStore(rootStore);
       return () => {
-        rootStore.orderPageStore = null;
+        rootStore._orderPageStore = null;
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }),
     []
   );
-  const orderPageStore = rootStore.orderPageStore;
-  if (!orderPageStore) {
-    console.log("No store yet");
+
+  if (!rootStore._orderPageStore) {
     return null;
   }
 
@@ -29,7 +28,7 @@ export const OrderPage: React.FC<{}> = observer(() => {
     <div>
       <h1>OrderPage</h1>
 
-      <div>In OrderPage: {orderPageStore.counter}</div>
+      <div>In OrderPage: {rootStore.orderPageStore.counter}</div>
       <OrderPageCounter />
       <OrderPageButton />
     </div>
